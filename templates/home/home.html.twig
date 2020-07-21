@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Bienvenue sur le meilleur réseau de voyageurs
+{% endblock %}
+
 {% block body %}
 <div class="container mt-5">
 	<div class="jumbotron">
 		<h1 class="display-3">
 			<small>Bienvenue sur
 			</small>
-			<b>FiiverBNB</b>
+			<b><a href="#"  class="card-link">FiiverBNB</a></b>
 		</h1>
 		<p class="lead">
 			<h4>Nous mettons en relations les voyageurs et les propriétaires qui veulent profiter de l'opportunité de mettre leur bien en location et de gagner de l'argent!!!</h4>
@@ -17,8 +21,119 @@
 				Vous êtes un voyageur? Et vous voulez savoir que sera votre prochaine destination?</h5>
 		</p>
 		<p class="lead">
-			<a class="btn btn-primary btn-lg" href="#" role="button">Voir nos annonces</a>
+			<a class="btn btn-success btn-lg" href="#" role="button">Voir nos annonces</a>
 		</p>
 	</div>
+
+	<h2 class="h1 mt-3 mb-3">
+		Nos destinations <b style="color: #6B9430; text-transform: uppercase;">stars</b>...
+	</h2>
+
+	<div class="row">
+		<div class="col-md-3">
+			<div class="card border-light mb-3">
+				<div class="card-header text-center">
+					Enim magna dolor aliquip.
+					<strong>49 euros / nuit</strong>
+				</div>
+				<img src="http://placehold.it/800x400" alt="" style="height: 200px; width: 100%; display: block">
+				<div class="card-body">
+					<h4 class="card-title">Dolor aliquip.</h4>
+					<p class="card-text">Consequat ipsum eiusmod eu dolore.</p>
+					<a href="#" class="btn btn-success ml-4">Voir l'annonce</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-light mb-3">
+				<div class="card-header text-center">
+					Enim magna dolor aliquip.
+					<strong>49 euros / nuit</strong>
+				</div>
+				<img src="http://placehold.it/800x400" alt="" style="height: 200px; width: 100%; display: block">
+				<div class="card-body">
+					<h4 class="card-title">Dolor aliquip.</h4>
+					<p class="card-text">Consequat ipsum eiusmod eu dolore.</p>
+					<a href="#" class="btn btn-success ml-4">Voir l'annonce</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-light mb-3">
+				<div class="card-header text-center">
+					Enim magna dolor aliquip.
+					<strong>49 euros / nuit</strong>
+				</div>
+				<img src="http://placehold.it/800x400" alt="" style="height: 200px; width: 100%; display: block">
+				<div class="card-body">
+					<h4 class="card-title">Dolor aliquip.</h4>
+					<p class="card-text">Consequat ipsum eiusmod eu dolore.</p>
+					<a href="#" class="btn btn-success ml-4">Voir l'annonce</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card border-light mb-3">
+				<div class="card-header text-center">
+					Enim magna dolor aliquip.
+					<strong>49 euros / nuit</strong>
+				</div>
+				<img src="http://placehold.it/800x400" alt="" style="height: 200px; width: 100%; display: block">
+				<div class="card-body">
+					<h4 class="card-title">Dolor aliquip.</h4>
+					<p class="card-text">Consequat ipsum eiusmod eu dolore.</p>
+					<a href="#" class="btn btn-success ml-4">Voir l'annonce</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<h2 class="h1 mt-3 mb-3">
+		Nos propriétaires <b style="color: #6B9430; text-transform: uppercase;">stars</b>...
+	</h2>
+
+	<div class="row mb-5">
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h4 class="card-title">Lior Chamla</h4>
+
+					<div class="card-text">
+						<img src="http://placehold.it/64x64" alt="" class="float-left mr-3">
+						<p>Consequat ipsum eiusmod eu dolore.</p>
+					</div>
+					<a href="#" class="btn btn-success float-right">Plus d'infos</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h4 class="card-title">Lior Chamla</h4>
+
+					<div class="card-text">
+						<img src="http://placehold.it/64x64" alt="" class="float-left mr-3">
+						<p>Consequat ipsum eiusmod eu dolore.</p>
+					</div>
+					<a href="#" class="btn btn-success float-right">Plus d'infos</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h4 class="card-title">Lior Chamla</h4>
+
+					<div class="card-text">
+						<img src="http://placehold.it/64x64" alt="" class="float-left mr-3">
+						<p>Consequat ipsum eiusmod eu dolore.</p>
+					</div>
+					<a href="#" class="btn btn-success float-right">Plus d'infos</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
+
 {% endblock %}
