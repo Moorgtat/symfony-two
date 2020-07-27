@@ -3,14 +3,20 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(
+ * fields={"title"},
+ * message="Une autre annonce possède deja ce titre, merci de le modifier."
+ * )
  */
 class Product
 {
@@ -23,6 +29,9 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, max=245, 
+     * minMessage="Le titre doit faire plus de 8 caractres", 
+     * maxMessage="Le titre comporte plus de 245 caractères")
      */
     private $title;
 
@@ -38,6 +47,8 @@ class Product
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=20, 
+     * minMessage="Votre description doit faire plus de 20 caractères")
      */
     private $introduction;
 
@@ -48,6 +59,7 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
      */
     private $coverImage;
 
@@ -58,6 +70,7 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 

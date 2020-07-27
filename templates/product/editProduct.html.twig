@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Création d'une annonce
+	Edition d'une annonce
 {% endblock %}
 
 {% form_theme form _self %}
 
 {% block body %}
 	<div class="container">
-		<h2>Créer une nouvelle annonce</h2>
+		<h2>Modifier une annonce :</h2>
 		{{ form_start(form) }}
 		{{ form_widget(form) }}
-		<button type="submit" class="btn btn-primary">Créer une annonce</button>
+		<button type="submit" class="btn btn-primary">Modifier cette annonce</button>
 		{{ form_end(form) }}
 	</div>
 	<br>
@@ -52,18 +52,16 @@
 			</div>
 		</div>
 	</div>
-
-
 {% endblock %}
 
 {% block javascripts %}
-	<script>
+<script>
 $('#add-image').click(function () {
-const index = +$('#widgets-counter').val();
-const tmpl = $('#product_images').data('prototype').replace(/_name_/g, index);
-$('#product_images').append(tmpl);
-$('#widgets-counter').val(index + 1);
-handleDeleteButtons();
+	const index = +$('#widgets-counter').val();
+	const tmpl = $('#product_images').data('prototype').replace(/_name_/g, index);
+	$('#product_images').append(tmpl);
+	$('#widgets-counter').val(index + 1);
+	handleDeleteButtons();
 });
 
 function handleDeleteButtons() {
@@ -73,6 +71,15 @@ $(target).remove();
 });
 }
 
+function updateCounter() {
+const count = +$('#product_images div.form-group').length;
+$('#widgets-counter').val(count);
+}
+
+updateCounter();
+
 handleDeleteButtons();
-	</script>
+
+</script>
 {% endblock %}
+

@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Product;
 use App\Form\ProductType;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,12 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            
+            foreach($product->getImages() as $image) {
+                $image->setProduct($product);
+                $manager->persist($image);
+            }
+
             $manager->persist($product);
             $manager->flush();
 
@@ -51,6 +58,41 @@ class ProductController extends AbstractController
 
         return $this->render('product/newProduct.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     *@Route("/product/{slug}/edit", name="product_edit")
+     * @return Response
+     */
+    public function edit(Product $product, Request $request, EntityManagerInterface $manager) {
+      
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            
+            foreach($product->getImages() as $image) {
+                $image->setProduct($product);
+                $manager->persist($image);
+            }
+
+            $manager->persist($product);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$product->getTitle()}</strong> a bien été modifiée !"
+            );
+
+            return $this->redirectToRoute('product_show', [
+                'slug' => $product->getSlug()
+            ]);
+        }
+
+        return$this->render('product/editProduct.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product
         ]);
     }
 
