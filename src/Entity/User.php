@@ -8,10 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * * @UniqueEntity(
+ * fields={"email"},
+ * message="Cette adresse email est déjà utilisée."
+ * )
  */
 class User implements UserInterface
 {
@@ -24,21 +31,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner ce champ.")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner ce champ.")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner une adresse email valide.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message="Vous devez renseigner une url d'avatar valide.")
      */
     private $picture;
 
@@ -48,12 +59,19 @@ class User implements UserInterface
     private $hash;
 
     /**
+     *@Assert\EqualTo(propertyPath="hash", message="Votre mot de passe n'et pas identique.")
+     */
+    public $passwordConfirm;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=10, minMessage="Votre introduction doit comporter au moins 10 caractères.")
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=30, minMessage="Votre description doit comporter au moins 30 caractères.")
      */
     private $description;
 
