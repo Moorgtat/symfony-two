@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks()
- * * @UniqueEntity(
+ * @UniqueEntity(
  * fields={"email"},
  * message="Cette adresse email est déjà utilisée."
  * )
@@ -103,6 +103,10 @@ class User implements UserInterface
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->firstName . ' ' . $this->lastName);
         }
+    }
+
+    public function getFullName() {
+        return "{$this->firstName} {$this->lastName}";
     }
 
     public function getId(): ?int

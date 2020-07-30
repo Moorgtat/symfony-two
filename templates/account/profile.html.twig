@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}Informations de mon compte{% endblock %}
 
 {% block body %}
 <div class="container">
-<h1>Mon compte</h1>
+<h1>Modifier mes informations</h1>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+<a type="button" class="btn btn-success" href="{{ path('account_password') }}">Modifier mon mot de passe</a>
+<a type="button" class="btn btn-success" href="{{ path('account_index') }}">Mon compte</a>
 {{ form_end(form) }}
 </div>
 {% endblock %}

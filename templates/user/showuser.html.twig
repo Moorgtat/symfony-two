@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ user.fullName }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row align-items-center mb-3">
+			<div class="col-3 text-center">
+				<img src="{{ user.picture }}" class="avatar-medium mb-3" alt="Avatar de {{ user.fullName }}">
+				<br>
+				<h5>
+					<span class="badge badge-primary">
+						{{ user.products | length }}
+						annonces
+					</span>
+				</h5>
+			</div>
+			<div class="col-9">
+				<h1>
+					<strong>{{ user.fullName }}</strong>
+				</h1>
+
+			{% if user is same as(app.user) %}
+				<div class="mt-3">
+				<a href="{{ path('account_profile') }}" class="btn btn-success mr-2 mb-2"> Modifier mes informations</a>
+				</div>
+			{% endif %}
+			</div>
+		</div>
+
+		{{ user.description | raw}}
+
+		<hr class="mb-3">
+
+		<h2 class="mb-3">Les annonces de
+			<b style="color: #6B9430; text-transform: uppercase;">{{ user.fullName }}</b></h2>
+
+		{% if user.products | length > 0 %}
+			<div class="row">
+				{% for product in user.products %}
+					{% include 'product/_product.html.twig' %}
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="alert alert-warning">
+				<p>
+					<strong>
+						{{ user.fullName }}
+					</strong>
+					n'a pas encore d'annonce sur le site !!!
+				</p>
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock %}
+

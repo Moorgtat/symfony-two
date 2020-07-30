@@ -1,0 +1,24 @@
+{% set url_show = path( 'product_show', {'slug': product.slug }) %}
+<div class="col-md-4">
+	<div class="card border-light mb-3">
+		<div class="card-header text-center">
+			{{ product.rooms }}
+			chambres
+			<strong>
+				{{ product.price }}
+				euros/nuit</strong>
+		</div>
+		<a href="{{ url_show }}">
+			<img src="{{ product.coverImage }}" alt="" style="height: 280px; width: 100%; display: block">
+		</a>
+		<div class="card-body">
+			<h4 class="card-title">
+				<a href="{{ url_show }}">
+					{{ product.title }}
+				</a>
+			</h4>
+			<p class="card-text">{{ product.introduction }}</p>
+			<a href="{{ url_show }}" class="btn btn-success ml-4">Voir l'annonce</a>
+		</div>
+	</div>
+</div>

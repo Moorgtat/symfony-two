@@ -18,7 +18,6 @@
 					euros</strong>
 				par nuit
 			</p>
-			<a href="#" class="btn btn-primary">Réserver</a>
 		</div>
 	</div>
 
@@ -59,20 +58,26 @@
 			</div>
 
 			<div class="col">
-				<div class="row">
-					<div class="col-4">
-						<img src="http://placehold.it/64x64" alt="Avatar">
+			{% set a = product.author %}
+				<div class="row mb-3">
+					<div class="col-4 text-center">
+					<a href="{{ path('user_show', {'slug': a.slug} )}}">
+						<img src="{{ a.picture }}" class="avatar" alt="Avatar de {{ a.getFullName }}">
+					</a>
 					</div>
-					<div class="col">
-						<h3>Gilles Dupont</h3>
-						<span class="badge badge-primary">
-							3 annonces
+					<div class="col-8">
+					<a href="{{ path('user_show', {'slug': a.slug} )}}" style="text-decoration: none">
+						<h3>{{ a.getFullName }}</h3>
+					</a>	
+						<span class="badge badge-success">
+							{{ a.products | length }} annonces
 						</span>
 					</div>
 				</div>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe delectus deleniti, facilis explicabo nesciunt perferendis consequatur officiis itaque quia eveniet.</p>
-				<p>Odit consectetur temporibus maxime! Est ab numquam esse sapiente quibusdam? Quibusdam, autem. Enim quibusdam tenetur nihil odit eaque repellat esse.</p>
-				<p>Minus repellendus, sapiente vitae, laboriosam, adipisci quos praesentium eveniet quisquam recusandae fugiat dolores sed magnam eligendi commodi saepe. Ullam, sapiente.</p>
+				{{ a.description | raw }}
+
+				<a href="#" class="btn btn-success">Réserver</a>
+				
 			</div>
 
 		</div>

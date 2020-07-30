@@ -43,6 +43,8 @@ class ProductController extends AbstractController
                 $manager->persist($image);
             }
 
+            $product->setAuthor($this->getUser());
+
             $manager->persist($product);
             $manager->flush();
 
