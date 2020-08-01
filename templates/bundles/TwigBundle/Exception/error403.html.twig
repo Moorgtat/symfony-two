@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Accès interdit {% endblock %}
+
+{% block body %}
+<div class="container">
+<h2> Oups! Vous n'avez pas le droit d'accéder à cette ressource.</h2>
+<p>Ne vous inquiètez pas, vous pouvez toujours retourner à l'accueil 
+ou voir nos dernière annonces.</p>
+<a href="{{ path('homepage')}}" class="btn btn-success">
+Retour à l'accueil</a>
+<a href="{{ path('products_index')}}" class="btn btn-success">
+Nos annonces</a>
+</div>
+{% endblock %}
