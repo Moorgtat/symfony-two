@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
@@ -28,6 +30,7 @@ class ProductController extends AbstractController
 
     /**
     *@Route("/product/new", name="product_create")
+    *@IsGranted("ROLE_USER")
     *@return Response
     */
     public function create(Request $request, EntityManagerInterface $manager)
@@ -65,6 +68,7 @@ class ProductController extends AbstractController
 
     /**
      *@Route("/product/{slug}/edit", name="product_edit")
+     *@Security("is_granted('ROLE_USER') and user === product.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier.")
      * @return Response
      */
     public function edit(Product $product, Request $request, EntityManagerInterface $manager) {
@@ -107,6 +111,26 @@ class ProductController extends AbstractController
         return $this->render('product/show.html.twig', [
             'product' => $product
         ]);
+    }
+
+    /**
+     * Undocumented function
+     *@Route("/product/{slug}/delete", name="product_delete")
+     *@Security("is_granted('ROLE_USER') and user === product.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la supprimer.")
+     * @param Product $product
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function delete(Product $product, EntityManagerInterface $manager){
+        $manager->remove($product);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            "L'annonce <strong>{$product->getTitle()}</strong> a bien été supprimée !"
+        );
+
+    return $this->redirectToRoute("account_index");
     }
 
 }

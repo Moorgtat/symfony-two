@@ -18,6 +18,15 @@
 					euros</strong>
 				par nuit
 			</p>
+			{% if app.user and app.user == product.getAuthor %}
+			<a href="{{ path('product_edit', {'slug': product.slug}) }}" class="btn btn-secondary">
+			Modifier l'annonce
+			</a>
+			<a href="{{ path('product_delete', {'slug': product.slug}) }}" class="btn btn-danger"
+			onclick="return confirm(`Êtes vous sur de vouloir supprimer cette annonce?`)">
+			Supprimer l'annonce
+			</a>
+			{% endif %}
 		</div>
 	</div>
 
