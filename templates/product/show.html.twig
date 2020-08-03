@@ -18,6 +18,7 @@
 					euros</strong>
 				par nuit
 			</p>
+			<a href="{{ path('booking_create', {'slug': product.slug})}}" class="btn btn-success ml-1 mt-2">Réserver</a>
 			{% if app.user and app.user == product.getAuthor %}
 			<a href="{{ path('product_edit', {'slug': product.slug}) }}" class="btn btn-secondary">
 			Modifier l'annonce
@@ -84,8 +85,6 @@
 					</div>
 				</div>
 				{{ a.description | raw }}
-
-				<a href="#" class="btn btn-success">Réserver</a>
 				
 			</div>
 
