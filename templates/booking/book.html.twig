@@ -5,9 +5,11 @@
 
 {% block body %}
 	<div class="container">
+
 		<h1>Réservez l'annonce pour :
 			{{ product.title }}
 		</h1>
+
 		<p>Vous êtes sur le point de réserver le bien de
 			<strong>{{ product.author.fullname }}</strong>. 
 				Dites nous tout, on s'occupe du reste !</p>
@@ -27,17 +29,19 @@
 
 			</div>
 		</div>
+
+		<span id="days">0</span> nuits à {{product.price}}&euro;/nuit
+
 		<h4>Montant du séjour :
-			<span id="amount">...</span>
-			&euro;</h4>
-		<span id="days">0</span>
-		nuits à
-		{{product.price}}&euro;/nuit
+			<span id="amount">...</span> &euro;
+		</h4>
+				
 		<h2>Vous avez un commentaire?</h2>
 
 		{{ form_row(form.comment) }}
 
 		<h2>Vous avez terminé!</h2>
+
 		<p>
 			Vacance de rêves? Hébergement pour le boulot? Nous sommes toujours la pour vous !
         </p>
@@ -49,3 +53,26 @@
 	</div>
 {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script>
+	$(document).ready(function(){
+		$('#booking_startDate, #booking_endDate').on('change', calculateAmount);
+	})
+
+	function calculateAmount() {
+	
+		const endDate = new Date($('#booking_endDate').val());
+		const startDate = new Date($('#booking_startDate').val());
+
+		if ( startDate && endDate && startDate < endDate ) {
+			const interval = endDate.getTime() - startDate.getTime();
+			const days = interval / (24 * 60 * 60 * 1000);
+			const amount = days * {{ product.price }};
+
+		   $('#days').text(days);
+		   $('#amount').text(amount.toLocaleString('fr-Fr'));
+		}
+	}
+</script>
+{% endblock %}

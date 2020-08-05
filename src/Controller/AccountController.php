@@ -41,8 +41,8 @@ class AccountController extends AbstractController
     public function logout() {}
 
     /**
-     *@Route("/register", name="account_register")
-     *@return Response
+     * @Route("/register", name="account_register")
+     * @return Response
      */
     public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder) {
         $user= new User();
@@ -70,8 +70,8 @@ class AccountController extends AbstractController
     }
 
     /**
-     *@Route("/account/profil", name="account_profile")
-     *@IsGranted("ROLE_USER")
+     * @Route("/account/profil", name="account_profile")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function profile(Request $request, EntityManagerInterface $manager){
@@ -95,8 +95,8 @@ class AccountController extends AbstractController
     }
 
     /**
-     *@Route("/account/update-password", name="account_password")
-     *@IsGranted("ROLE_USER")
+     * @Route("/account/update-password", name="account_password")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function upadtePassword(Request $request, EntityManagerInterface $manager,  UserPasswordEncoderInterface $encoder) {
@@ -128,14 +128,24 @@ class AccountController extends AbstractController
     }
 
     /**
-     *@Route("/account", name="account_index")
-     *@IsGranted("ROLE_USER")
-     *@return Response
+     * @Route("/account", name="account_index")
+     * @IsGranted("ROLE_USER")
+     * @return Response
      */
     public function myAccount() {
         return $this->render('user/showuser.html.twig', [
             'user' => $this->getUser()
         ]);
+    }
+
+    /**
+     * @Route("/account/bookings", name="account_bookings")
+     * @IsGranted("ROLE_USER")
+     * @return Response
+     */
+    public function bookings() {
+        return $this->render('account/bookings.html.twig', []);
+
     }
 
 }

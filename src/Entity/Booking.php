@@ -34,12 +34,14 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today", message="La date d'arrivée doit être ultérieur à la date d'aujourd'hui !")
      * @Assert\Type("\DateTimeInterface", message="Mauvais format!")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="startDate", message="La date de départ doit être ultérieur à la date d'arrivée !")
      * @Assert\Type("\DateTimeInterface", message="Mauvais format!")
      */
     private $endDate;
@@ -75,39 +77,6 @@ class Booking
     public function getDuration() {
         $diff = $this->endDate->diff($this->startDate);
         return $diff->days;
-    }
-
-    public function isBookableDates() {
-        $notAvailableDays = $this->product->getNotAvailableDays();
-        $bookingDays = $this->getDays();
-
-        $formatDay = function($day){
-            return $day->format('Y-m-d');
-        };
-
-        $days = array_map($formatDay, $bookingDays);
-
-        $notAvailable = array_map($formatDay, $notAvailableDays);
-
-        foreach($days as $day) {
-            if(array_search($day, $notAvailable) !== false) return false;
-        }
-        return true;
-    }
-
-    public function getDays() {
-       
-        $resultat = range(
-            $this->startDate->getTimestamp(),
-            $this->endDate->getTimestamp(),
-            24*60*60
-        );
-
-        $days = array_map(function($dayTimestamp) {
-            return new \DateTime(date('Y-m-d', $dayTimestamp));
-        }, $resultat);
-
-        return $days;
     }
 
     public function getId(): ?int

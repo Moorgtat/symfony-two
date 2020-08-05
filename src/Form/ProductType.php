@@ -25,12 +25,11 @@ class ProductType extends ApplicationType
                 $this->getConfiguration("Titre", "Le titre de votre annonce"))
             ->add('slug', 
                 TextType::class, 
-                $this->getConfiguration("Adresse Web", "Adresse web de votre annonce"))
+                $this->getConfiguration("Adresse Web", "Adresse web de votre annonce",
+                [ 'required' => false ]))
             ->add('introduction', 
                 TextType::class, 
-                $this->getConfiguration("Introduction","Donnez une description global de votre annonce",
-                [ 'required' => false ]
-                ))
+                $this->getConfiguration("Introduction","Donnez une description global de votre annonce"))
             ->add('content', 
                 TextareaType::class, 
                 $this->getConfiguration("Description détaillé", "Description détaillé de votre annonce"))

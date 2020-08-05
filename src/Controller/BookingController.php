@@ -30,17 +30,11 @@ class BookingController extends AbstractController
             $booking->setBooker($user)
                     ->setProduct($product);
 
-            if(!$booking->isBookableDates()){
-                $this->addFlash(
-                    "warning",
-                    "Ces dates ne sont pas disponible pour cette annonce."
-                );
-            } else {
-                $manager->persist($booking);
-                $manager->flush();
+            $manager->persist($booking);
+            $manager->flush();
     
-                return $this->redirectToRoute('booking_show', ['id' => $booking->getId()]);
-            }
+            return $this->redirectToRoute('booking_show', ['id' => $booking->getId()]);
+            
         }
 
         return $this->render('booking/book.html.twig', [
