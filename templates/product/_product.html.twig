@@ -3,10 +3,14 @@
 	<div class="card border-light mb-3">
 		<div class="card-header text-center">
 			{{ product.rooms }}
-			chambres
-			<strong>
-				{{ product.price }}
-				euros/nuit</strong>
+			chambres <strong>{{ product.price }} euros/nuit</strong>
+			<br>
+		{% if product.comments|length > 0 %}
+			{% include 'common/rating.html.twig' with {'rating': product.avgRatings} %}
+		{% else %}
+		<small>Pas encore de note</small>
+		{% endif %}
+
 		</div>
 		<a href="{{ url_show }}">
 			<img src="{{ product.coverImage }}" alt="" style="height: 280px; width: 100%; display: block">

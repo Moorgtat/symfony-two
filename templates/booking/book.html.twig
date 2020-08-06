@@ -3,6 +3,11 @@
 {% block title %}Réserver mon séjour
 {% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+{% endblock %}
+
 {% block body %}
 	<div class="container">
 
@@ -55,6 +60,24 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+
+<script>
+	$(document).ready(function(){
+		$('#booking_startDate, #booking_endDate').datepicker({
+			format: 'dd/mm/yyyy',
+			datesDisabled: [
+				{% for day in product.notAvailableDays %}
+					"{{ day.format('d/m/Y') }}",
+				{% endfor %}
+			],
+			startDate: new Date()
+
+		});
+	})
+
+</script>
+
 <script>
 	$(document).ready(function(){
 		$('#booking_startDate, #booking_endDate').on('change', calculateAmount);
@@ -62,8 +85,8 @@
 
 	function calculateAmount() {
 	
-		const endDate = new Date($('#booking_endDate').val());
-		const startDate = new Date($('#booking_startDate').val());
+		const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+		const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
 
 		if ( startDate && endDate && startDate < endDate ) {
 			const interval = endDate.getTime() - startDate.getTime();

@@ -79,6 +79,39 @@ class Booking
         return $diff->days;
     }
 
+    public function isBookableDates() {
+        $notAvailableDays = $this->product->getNotAvailableDays();
+        $bookingDays = $this->getDays();
+
+        $formatDay = function($day){
+            return $day->format('Y-m-d');
+        };
+
+        $days = array_map($formatDay, $bookingDays);
+
+        $notAvailable = array_map($formatDay, $notAvailableDays);
+
+        foreach($days as $day) {
+            if(array_search($day, $notAvailable) !== false) return false;
+        }
+        return true;
+    }
+
+    public function getDays() {
+
+        $resultat = range(
+            $this->startDate->getTimestamp(),
+            $this->endDate->getTimestamp(),
+            24*60*60
+        );
+
+        $days = array_map(function($dayTimestamp) {
+            return new \DateTime(date('Y-m-d', $dayTimestamp));
+        }, $resultat);
+
+        return $days;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
