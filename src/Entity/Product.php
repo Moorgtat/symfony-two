@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
@@ -110,6 +111,13 @@ class Product
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->title);
         }
+    }
+
+    public function getCommentFromAuthor(User $author){
+        foreach($this->comments as $comment){
+            if($comment->getAuthor() === $author) return $comment;
+        }
+        return null;
     }
 
     public function getAvgRatings() {

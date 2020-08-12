@@ -17,18 +17,18 @@
 					<h2>Détails</h2>
 					<dl class="row">
 						<dt class="col-md-4">Numéro</dt>
-						<dd class="col-md-8">{{booking.id}}</dd>
+						<dd class="col-md-8 text-center">{{booking.id}}</dd>
 						<dt class="col-md-4">Date d'arrivée</dt>
-						<dd class="col-md-8">{{booking.startDate | date('d/m/Y')}}</dd>
-						<dt class="col-md-4">Date dde départ</dt>
-						<dd class="col-md-8">{{booking.endDate | date('d/m/Y')}}</dd>
+						<dd class="col-md-8 text-center">{{booking.startDate | date('d/m/Y')}}</dd>
+						<dt class="col-md-4">Date de départ</dt>
+						<dd class="col-md-8 text-center">{{booking.endDate | date('d/m/Y')}}</dd>
 						<dt class="col-md-4">Nombre de nuits</dt>
-						<dd class="col-md-8">{{booking.duration}}</dd>
+						<dd class="col-md-8 text-center">{{booking.duration}}</dd>
 						<dt class="col-md-4">Montant total</dt>
-						<dd class="col-md-8">{{booking.amount}}
+						<dd class="col-md-8 text-center">{{booking.amount}}
 							&euro;</dd>
 						<dt class="col-md-4">Commentaire</dt>
-						<dd class="col-md-8">{{booking.comment}}</dd>
+						<dd class="col-md-8 text-center">{{booking.comment | default('Aucun commentaire')}}</dd>
 					</dl>
 				</div>
 
@@ -57,7 +57,31 @@
 					Plus d'infos sur
 					{{ author.firstName }}
 				</a>
+
+				<hr>
+
+				<div class="alert alert-light" id="comment">
+					<h3 class="alert-heading">Votre avis compte !</h3>
+					{% if date() > date(booking.endDate) %}
+						{% set comment = booking.product.commentFromAuthor(app.user) %}
+						{% if comment is not null %}
+						<blockquote>
+						 {{comment.content}}
+						</blockquote>
+						<strong>Note: </strong>
+						{% include 'common/rating.html.twig' with {'rating': comment.rating} %}
+						{% else %}
+						{{ form_start(form)}}
+						{{ form_widget(form) }}
+						<button type="submit" class="btn btn-success">Envoyer</button>
+						{{ form_end(form) }}
+						{% endif %}				
+					{% else %}
+						<p class="alert-light py-3 px-2" style="color: #6b9430;"><strong style="font-weight: bold;"> Vous ne pouvez pas noter cette annonce tant que votre voyage ne sera pas terminé! </strong> </p>
+					{% endif %} 
+				</div>
 			</div>
+			
 
 			<div class="col-7">
 				<div class="alert alert-light">
@@ -80,3 +104,4 @@
 		</div>
 	</div>
 {% endblock %}
+

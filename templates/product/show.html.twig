@@ -92,7 +92,7 @@
 						<blockquote>
 						{{ comment.content }}
 						</blockquote>
-						 Note donnée par <strong> {{ comment.author.fullName }} </strong>: 
+						<strong>Note donnée :</strong>
 						{% include 'common/rating.html.twig' with {'rating': comment.rating } %}
 					</div>
 				{% endfor %}

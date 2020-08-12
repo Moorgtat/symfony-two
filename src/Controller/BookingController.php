@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Entity\Product;
 use App\Form\BookingType;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,9 +56,24 @@ class BookingController extends AbstractController
      * @param Booking $booking
      * @return Response
      */
-    public function show(Booking $booking) {
+    public function show(Booking $booking, Request $request, EntityManagerInterface $manager) {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $comment->setProduct($booking->getProduct())
+                    ->setAuthor($this->getUser());
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Votre commentaire a bien été pris en compte"
+            );
+        }
         return $this->render('booking/show.html.twig', [
-            'booking' => $booking
+            'booking' => $booking,
+            'form' => $form->createView()
         ]);
     }
 
