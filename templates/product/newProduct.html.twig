@@ -58,9 +58,9 @@
 
 {% block javascripts %}
  {{ parent() }} 
-	<script>
-$('#add-image').click(function () {
-const index = +$('#widgets-counter').val();
+<script>
+	$('#add-image').click(function () {
+const index = + $('#widgets-counter').val();
 const tmpl = $('#product_images').data('prototype').replace(/_name_/g, index);
 $('#product_images').append(tmpl);
 $('#widgets-counter').val(index + 1);
@@ -75,5 +75,6 @@ $(target).remove();
 }
 
 handleDeleteButtons();
-	</script>
+</script>
+
 {% endblock %}

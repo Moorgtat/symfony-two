@@ -114,9 +114,9 @@ class ProductController extends AbstractController
     }
 
     /**
-     * Undocumented function
-     *@Route("/product/{slug}/delete", name="product_delete")
-     *@Security("is_granted('ROLE_USER') and user === product.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la supprimer.")
+     * Supprimer un produit
+     * @Route("/product/{slug}/delete", name="product_delete")
+     * @Security("is_granted('ROLE_USER') and user === product.getAuthor()", message="Cette annonce ne vous appartient pas, vous ne pouvez pas la supprimer.")
      * @param Product $product
      * @param EntityManagerInterface $manager
      * @return Response
