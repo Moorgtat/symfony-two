@@ -45,4 +45,28 @@ class AdminProductController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Permet de supprimer une annonce
+     * @Route("/admin/products/{id}/delete", name="admin_products_delete")
+     * @param Product $product
+     * @return Response
+     */
+    public function delete(Product $product, EntityManagerInterface $manager) {
+        if(count($product->getBookings()) > 0 ) {
+            $this->addFlash(
+                'warning',
+                "L'annonce <strong>{$product->getTitle()}</strong> ne peut pas être supprimée car 
+                elle a deja eu des réservations !"
+            );
+        } else {
+            $manager->remove($product);
+            $manager->flush();
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$product->getTitle()}</strong> a bien été supprimée !"
+            );
+        }
+        return $this->redirectToRoute('admin_products_index');
+    }
 }
