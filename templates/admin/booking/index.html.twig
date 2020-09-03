@@ -13,6 +13,7 @@
                 <th>Date</th>
                 <th>Visiteur</th>
                 <th>Annonce</th>
+                <th>Prix</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,8 +30,11 @@
                 {{ booking.product.title }}
                 </td>
                 <td>
-                <a href="#" class="btn btn-primary mb-1"> <i class="fas fa-pen"></i> </a>
-                <a href="#" class="btn btn-danger"> <i class="fas fa-trash"></i> </a>
+                {{ booking.amount }} &euro;
+                </td>
+                <td>
+                <a href="{{ path('admin_booking_edit', { 'id': booking.id }) }}" class="btn btn-primary"> <i class="fas fa-pen"></i> </a>
+                <a href="{{ path('admin_booking_delete', { 'id': booking.id }) }}" class="btn btn-danger"> <i class="fas fa-trash"></i> </a>
                 </td>
             </tr>
         {% endfor %}    

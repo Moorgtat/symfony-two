@@ -34,7 +34,7 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\GreaterThan("today", message="La date d'arrivée doit être ultérieur à la date d'aujourd'hui !")
+     * @Assert\GreaterThan("today", message="La date d'arrivée doit être ultérieur à la date d'aujourd'hui !", groups={"front"})
      * @Assert\Type("\DateTimeInterface", message="Mauvais format!")
      */
     private $startDate;
