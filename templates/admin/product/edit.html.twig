@@ -6,14 +6,14 @@
 
 {% block body %}
 <div class="container">
-    <h3 class="my-5">Modification de l'annonce {{ product.title }}</h3>
+    <h3 class="my-5">Modification de l'annonce <strong>{{ product.title }}</strong></h3>
     	{{ form_start(form) }}
         <div class="row">
-            <div class="col">
+            <div class="col-lg-6 col-md-12 mb-3">
                 <div class="card bg-light">
                     <div class="card-header">
                         <h4 class="card-title">
-                        Modifier l'annonce?
+                        Modifier l'annonce ?
                         </h4>
                     </div>
                     <div class="card-body">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-lg-6 col-md-12">
                 <div class="card bg-light">
                     <div class="card-header">
                         <h4 class="card-title">
@@ -35,7 +35,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Voyageur</th>
                                 <th>Créé le</th>
                                 <th></th>
@@ -44,11 +43,10 @@
                         <tbody>
                         {% for booking in product.bookings %}
                             <tr>
-                                <td>{{ booking.id }}</td>
                                 <td>{{ booking.booker.fullName }}</td>
                                 <td>{{ booking.createdAt | date('d/m/Y') }}</td>
                                 <td>
-                                <a href="" class="btn btn-primary">
+                                <a href="{{ path('admin_booking_edit', { 'id': booking.id }) }}" class="btn btn-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 </td>
@@ -58,7 +56,7 @@
                     </table>
                     </div>
                 </div>
-                <div class="card bg-light mt-4">
+                <div class="card bg-light mt-3">
                     <div class="card-header">
                         <h4 class="card-title">
                         Les commentaires:
@@ -68,7 +66,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Voyageur</th>
                                 <th>Note</th>
                                 <th>Commentaire</th>
@@ -78,12 +75,11 @@
                         <tbody>
                         {% for comment in product.comments %}
                             <tr>
-                                <td>{{ comment.id }}</td>
                                 <td>{{ comment.author.fullName }}</td>
                                 <td>{{ comment.rating }}</td>
                                 <td>{{ comment.content }}</td>
                                 <td>
-                                <a href="" class="btn btn-primary">
+                                <a href="{{ path('admin_comment_edit', { 'id': comment.id }) }}" class="btn btn-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 </td>
