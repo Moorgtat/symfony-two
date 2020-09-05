@@ -11,7 +11,7 @@
 				<small>Bienvenue sur
 				</small>
 				<b>
-					<a href="#" class="card-link">FiiverBNB</a>
+					<a href="{{ path('homepage') }}" class="card-link">FiiverBNB</a>
 				</b>
 			</h1>
 			<p class="lead">
@@ -34,7 +34,47 @@
 
 		<div class="row">
 			{% for data in products %}
-				{% include 'product/_product.html.twig' with {'product': data.annonce} %}
+				{% set product = data.annonce %}
+				<div class="col-md-6">
+					<div class="card border-light mb-3">
+						<div class="card-header text-center">
+							{{ product.rooms }}
+							chambres
+							<strong>{{ product.price }}
+								euros/nuit</strong>
+							<br>
+							{% if product.comments|length > 0 %}
+								{% include 'common/rating.html.twig' with {'rating': product.avgRatings} %}
+							{% else %}
+								<small>Pas encore de note</small>
+							{% endif %}
+
+						</div>
+						<a href="{{ path( 'product_show', {'slug': product.slug }) }}">
+							<img src="{{ product.coverImage }}" alt="" style="height: 280px; width: 100%; display: block">
+						</a>
+						<div class="card-body">
+							<h4 class="card-title">
+								<a href="{{ path( 'product_show', {'slug': product.slug }) }}">
+									{{ product.title }}
+								</a>
+							</h4>
+							<p class="card-text">{{ product.introduction }}</p>
+							<div class="row">
+								<a href="{{ path( 'product_show', {'slug': product.slug }) }}" class="btn btn-success ml-4">Voir l'annonce</a>
+								{% if app.user and app.user == product.getAuthor %}
+									<a href="{{ path('product_edit', {'slug': product.slug}) }}" class="btn btn-secondary ml-1">
+										<i class="fas fa-pen"></i>
+									</a>
+									<a href="{{ path('product_delete', {'slug': product.slug}) }}" class="btn btn-danger ml-1" onclick="return confirm(`Êtes vous sur de vouloir supprimer cette annonce?`)">
+										<i class="fas fa-trash"></i>
+									</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+
 			{% endfor %}
 		</div>
 
@@ -45,19 +85,19 @@
 
 		<div class="row mb-5">
 			{% for data in users %}
-			<div class="col-md-6">
-				<div class="card mb-3">
-					<div class="card-body">
-						<h4 class="card-title">{{ data.user.fullName }}</h4>
+				<div class="col-md-6">
+					<div class="card mb-3">
+						<div class="card-body">
+							<h4 class="card-title">{{ data.user.fullName }}</h4>
 
-						<div class="card-text">
-							<img src="{{ data.user.picture }}" alt="" class="avatar-medium float-left mr-1">
-							<p>{{ data.user.introduction}}</p>
+							<div class="card-text">
+								<img src="{{ data.user.picture }}" alt="" class="avatar-medium float-left mr-4">
+								<p>{{ data.user.introduction}}</p>
+							</div>
+							<a href="{{ path('user_show', {'slug': data.user.slug}) }}" class="btn btn-success">Plus d'infos</a>
 						</div>
-						<a href="{{ path('user_show', {'slug': data.user.slug}) }}" class="btn btn-success float-right">Plus d'infos</a>
 					</div>
 				</div>
-			</div>
 			{% endfor %}
 		</div>
 

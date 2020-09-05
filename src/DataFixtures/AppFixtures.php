@@ -30,12 +30,12 @@ class AppFixtures extends Fixture
     $manager->persist($adminRole);
 
     $adminUser = new User();
-    $adminUser->setFirstName('Lior')
-              ->setLastname('Chamla')
-              ->setEmail('lior@symfony.com')
+    $adminUser->setFirstName('Mathieu')
+              ->setLastname('Le Cardinal')
+              ->setEmail('mlc@symfony.com')
               ->setHash($this->encoder->encodePassword($adminUser, 'password'))
-              ->setPicture('https://img-a.udemycdn.com/user/200_H/32068398_ac36.jpg')
-              ->setIntroduction($faker->sentence())
+              ->setPicture('https://i.redd.it/jty7k4o8fot01.jpg')
+              ->setIntroduction($faker->sentence(20))
               ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(4)) . '</p>')
               ->addUserRole($adminRole);
 
@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
     
     $genres = ['male', 'female'];
 
-    for ($i = 1; $i <= 10; $i++) {
+    for ($i = 1; $i <= 22; $i++) {
         $user = new User();
 
         $genre = $faker->randomElement($genres);
@@ -59,7 +59,7 @@ class AppFixtures extends Fixture
         $user->setFirstName($faker->firstname($genre))
              ->setLastName($faker->lastname)
              ->setEmail($faker->email)
-             ->setIntroduction($faker->sentence())
+             ->setIntroduction($faker->sentence(20))
              ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
              ->setHash($hash)
              ->setPicture($picture);
@@ -68,12 +68,12 @@ class AppFixtures extends Fixture
         $users[] = $user;
     }
 
-    for ($i = 1; $i <= 30; $i++) {
+    for ($i = 1; $i <= 60; $i++) {
 
       $product = new Product();
 
       $title = $faker->sentence();
-      $coverImage = $faker->imageUrl(450, 200);
+      $coverImage = $faker->imageUrl(640, 480, 'city');
       $introduction = $faker->paragraph(2);
       $content = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
 
@@ -91,14 +91,14 @@ class AppFixtures extends Fixture
 
         $image = new Image();
 
-        $image->setUrl($faker->imageUrl())
+        $image->setUrl($faker->imageUrl(640, 480, 'city'))
               ->setCaption($faker->sentence())
               ->setProduct($product);
         $manager->persist($image);
       }
 
     // Gestion Booking
-      for ($j = 1; $j <= mt_rand(0, 10); $j++) {
+      for ($j = 1; $j <= mt_rand(0, 5); $j++) {
           $booking = new Booking();
           $createdAt = $faker->dateTimeBetween('-6 months');
           $startDate = $faker->dateTimeBetween('-3 months');
@@ -118,7 +118,6 @@ class AppFixtures extends Fixture
           
           $manager->persist($booking);
 
-          if(mt_rand(0,1)) {
             $comment = new Comment();
             $comment->setContent($faker->paragraph())
                     ->setRating(mt_rand(1,5))
@@ -126,7 +125,6 @@ class AppFixtures extends Fixture
                     ->setProduct($product);
               
             $manager->persist($comment);
-          }
       }
 
       $manager->persist($product);
